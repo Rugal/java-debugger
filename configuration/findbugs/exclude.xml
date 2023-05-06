@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Match>
+    <Class name="~.*_" />
+  </Match>
+  <Match>
+    <Class name="ga.rugal.gitcleaner.maven.mojo.HelpMojo" />
+    <Bug pattern="UI_INHERITANCE_UNSAFE_GETRESOURCE" />
+  </Match>
+  <Match>
+    <Class name="config.DaggerGitCleaner" />
+    <Bug pattern="URF_UNREAD_FIELD" />
+  </Match>
+  <Match>
+    <Class name="config.RepositoryModule" />
+    <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
+  </Match>
+</FindBugsFilter>

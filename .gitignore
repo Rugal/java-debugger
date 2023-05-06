@@ -1,0 +1,23 @@
+/target/
+.classpath
+.project
+.settings
+nb-configuration.xml
+*.swp
+*.log
+/design/
+/nbproject/
+/nbactions.xml
+.idea
+*.iml
+.DS_Store
+.factorypath
+.vscode
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+/library/target/
+/maven-plugin/target/
+/debugger/target/
+/debuggee/target/

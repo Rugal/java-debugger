@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ga.rugal</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.16.0</version>
+  </parent>
+
+  <artifactId>jpda-parent</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+
+  <name>Java Platform Debugger Architecture parent</name>
+  <url>https://github.com/Rugal/git-cleaner.git</url>
+
+  <scm>
+    <connection>scm:git:ssh://git@github.com:Rugal/git-cleaner.git</connection>
+    <developerConnection>${project.scm.connection}</developerConnection>
+    <url>${project.url}</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <java.version>17</java.version>
+    <!-- test switch -->
+    <skip.surefire.tests>true</skip.surefire.tests>
+    <skip.failsafe.tests>true</skip.failsafe.tests>
+    <jacoco.skip.coverage.check>true</jacoco.skip.coverage.check>
+    <!--
+      dependency
+    -->
+    <!--
+      plugin
+    -->
+  </properties>
+
+  <modules>
+    <module>debuggee</module>
+    <module>debugger</module>
+  </modules>
+
+
+  <dependencyManagement>
+    <dependencies>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+<!--    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>-->
+<!--    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>-->
+    <!-- Auto Append -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!--
+        initialization
+      -->
+      <!-- git commit id -->
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <configuration>
+          <gitDescribe>
+            <always>true</always>
+          </gitDescribe>
+        </configuration>
+      </plugin>
+      <!--
+        static analysis
+      -->
+      <!-- checkstyle -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <!-- spotbugs -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <!-- PMD -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+      </plugin>
+      <!--
+        compilation
+      -->
+      <!-- compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <debug>true</debug>
+          <annotationProcessorPaths>
+          </annotationProcessorPaths>
+          <showDeprecation>true</showDeprecation>
+          <release>${java.version}</release>
+        </configuration>
+      </plugin>
+      <!--
+        test
+      -->
+      <!-- Unit Test -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <!-- Integration Test -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
+      <!-- Test Coverage -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

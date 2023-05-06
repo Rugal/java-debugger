@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ga.rugal</groupId>
+    <artifactId>jpda-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>debuggee</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <name>JPDA Debuggee</name>
+
+  <properties>
+  </properties>
+
+  <dependencies>
+    <!-- Auto Append -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <debug>true</debug>
+        </configuration>
+      </plugin>
+      <!--
+        packaging
+      -->
+      <!-- source -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <!-- jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>ga.rugal.DebuggeeMain</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <!-- javadoc -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <quiet>true</quiet>
+        </configuration>
+      </plugin>
+      <!-- with dependency -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              <mainClass>ga.rugal.DebuggeeMain</mainClass>
+            </manifest>
+            <manifestEntries>
+            </manifestEntries>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <!-- this is used for inheritance merges -->
+            <phase>package</phase>
+            <!-- append to the packaging phase. -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <executable>java</executable>
+          <mainClass>ga.rugal.DebuggeeMain</mainClass>
+          <arguments>
+            <argument>-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=y</argument>
+          </arguments>
+          <commandlineArgs/>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
