@@ -58,6 +58,25 @@
     <testSourceDirectory>src/test/kotlin</testSourceDirectory>
 
     <plugins>
+      <!-- validate -->
+      <plugin>
+        <!-- https://github.com/Ozsie/detekt-maven-plugin -->
+        <groupId>com.github.ozsie</groupId>
+        <artifactId>detekt-maven-plugin</artifactId>
+        <version>1.22.0</version>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        compilation
+      -->
+      <!-- compiler -->
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
@@ -79,7 +98,9 @@
           </execution>
         </executions>
       </plugin>
-
+      <!--
+        packaging
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -105,20 +126,26 @@
         </executions>
       </plugin>
 
+      <!--
+         execution
+      -->
       <plugin>
-        <groupId>com.github.ozsie</groupId>
-        <artifactId>detekt-maven-plugin</artifactId>
-        <version>1.22.0</version>
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <executable>java</executable>
+          <quietLogs>true</quietLogs>
+          <useMavenLogger>false</useMavenLogger>
+          <arguments>
+            <argument>-classpath</argument>
+            <!-- automatically creates the classpath using all project dependencies,
+                 also adding the project build directory -->
+            <classpath/>
+            <argument>ga.rugal.debugger.MainKt</argument>
+          </arguments>
+          <commandlineArgs/>
+        </configuration>
       </plugin>
-
     </plugins>
   </build>
 </project>

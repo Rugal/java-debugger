@@ -10,6 +10,8 @@
 
 2. run debugger
 
-```shell
-mvn clean compile && mvn exec:java
-````
+    ```shell
+    cd debugger; mvn exec:exec
+    ````
+
+## TODO

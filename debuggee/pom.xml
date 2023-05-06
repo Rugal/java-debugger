@@ -23,81 +23,36 @@
 
   <build>
     <plugins>
+      <!--
+        compilation
+      -->
+      <!-- compiler -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <debug>true</debug>
+          <showDeprecation>true</showDeprecation>
+          <release>${java.version}</release>
         </configuration>
       </plugin>
       <!--
-        packaging
+        execution
       -->
-      <!-- source -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      <!-- jar -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <mainClass>ga.rugal.DebuggeeMain</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-      <!-- javadoc -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <quiet>true</quiet>
-        </configuration>
-      </plugin>
-      <!-- with dependency -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-              <mainClass>ga.rugal.DebuggeeMain</mainClass>
-            </manifest>
-            <manifestEntries>
-            </manifestEntries>
-          </archive>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <!-- this is used for inheritance merges -->
-            <phase>package</phase>
-            <!-- append to the packaging phase. -->
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
         <configuration>
           <executable>java</executable>
-          <mainClass>ga.rugal.DebuggeeMain</mainClass>
+          <quietLogs>false</quietLogs>
+          <useMavenLogger>true</useMavenLogger>
           <arguments>
+            <argument>-classpath</argument>
+            <!-- automatically creates the classpath using all project dependencies,
+                 also adding the project build directory -->
+            <classpath/>
             <argument>-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=y</argument>
+            <argument>ga.rugal.DebuggeeMain</argument>
           </arguments>
           <commandlineArgs/>
         </configuration>

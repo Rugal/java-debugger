@@ -1,4 +1,4 @@
-# Java debugger
+# Java debuggee
 
 
 ## launch target JVM
