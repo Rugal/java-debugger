@@ -26,7 +26,11 @@ object MainWindow : BasicWindow() {
   val stackFramePanel = Panel()
 
   init {
-    this.component = mainPanel
+    this.setupWindow()
+    this.setupPanel()
+  }
+
+  private fun setupWindow() {
     this.setHints(
       listOf(
         Window.Hint.EXPANDED,
@@ -39,9 +43,39 @@ object MainWindow : BasicWindow() {
       override fun onInput(basePane: Window?, keyStroke: KeyStroke, deliverEvent: AtomicBoolean?) {
         // switch between panel
         when (keyStroke.character) {
-          't' -> true
-          'f' -> true
-          's' -> true
+          't' -> {
+            stackTraceOutPanel.removeAllComponents()
+            stackTraceOutPanel.addComponent(stackTracePanel.withBorder(Borders.singleLineBevel("Stack Trace")))
+
+            stackFrameOutPanel.removeAllComponents()
+            stackFrameOutPanel.addComponent(stackFramePanel.withBorder(Borders.singleLine("Stack Frame")))
+
+            sourceOutPanel.removeAllComponents()
+            sourceOutPanel.addComponent(sourcePanel.withBorder(Borders.singleLine("Source")))
+          }
+
+          'f' -> {
+            stackTraceOutPanel.removeAllComponents()
+            stackTraceOutPanel.addComponent(stackTracePanel.withBorder(Borders.singleLine("Stack Trace")))
+
+            stackFrameOutPanel.removeAllComponents()
+            stackFrameOutPanel.addComponent(stackFramePanel.withBorder(Borders.singleLineBevel("Stack Frame")))
+
+            sourceOutPanel.removeAllComponents()
+            sourceOutPanel.addComponent(sourcePanel.withBorder(Borders.singleLine("Source")))
+          }
+
+          's' -> {
+            stackTraceOutPanel.removeAllComponents()
+            stackTraceOutPanel.addComponent(stackTracePanel.withBorder(Borders.singleLine("Stack Trace")))
+
+            stackFrameOutPanel.removeAllComponents()
+            stackFrameOutPanel.addComponent(stackFramePanel.withBorder(Borders.singleLine("Stack Frame")))
+
+            sourceOutPanel.removeAllComponents()
+            sourceOutPanel.addComponent(sourcePanel.withBorder(Borders.singleLineBevel("Source")))
+          }
+
           else -> false
         }
 
@@ -80,6 +114,10 @@ object MainWindow : BasicWindow() {
       }
     })
 
+    this.component = mainPanel
+  }
+
+  private fun setupPanel() {
     this.mainPanel.also {
       it.layoutManager = LinearLayout(Direction.HORIZONTAL)
       it.addComponent(leftPanel)
