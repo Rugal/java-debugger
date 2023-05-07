@@ -10,20 +10,22 @@ import com.googlecode.lanterna.gui2.LinearLayout
 import com.googlecode.lanterna.gui2.Panel
 import com.googlecode.lanterna.gui2.Window
 import com.googlecode.lanterna.gui2.WindowListener
+import com.googlecode.lanterna.gui2.table.Table
 import com.googlecode.lanterna.input.KeyStroke
 
 object MainWindow : BasicWindow() {
   private val mainPanel = Panel()
   private val leftPanel = Panel()
   private val rightPanel = Panel()
+
   private val stackTraceOutPanel = Panel()
-  val stackTracePanel = Panel()
+  val stackTracePanel: Table<String> = Table<String>("Method")
 
   private val sourceOutPanel = Panel()
   val sourcePanel = Panel()
 
   private val stackFrameOutPanel = Panel()
-  val stackFramePanel = Panel()
+  val stackFramePanel: Table<String> = Table<String>("Name", "Type", "Value")
 
   init {
     this.setupWindow()
@@ -76,9 +78,8 @@ object MainWindow : BasicWindow() {
             sourceOutPanel.addComponent(sourcePanel.withBorder(Borders.singleLineBevel("Source")))
           }
 
-          else -> false
+          else -> {}
         }
-
       }
 
       override fun onUnhandledInput(basePane: Window?, keyStroke: KeyStroke?, hasBeenHandled: AtomicBoolean?) {
@@ -146,9 +147,13 @@ object MainWindow : BasicWindow() {
     this.stackFrameOutPanel.also {
       it.addComponent(this.stackFramePanel.withBorder(Borders.singleLine("Stack Frame")))
     }
-  }
 
-  private fun highlightPanel(toHighlight: Panel, other: List<Panel>) {
-//    toHighlight.withBorder()
+    this.stackFramePanel.also {
+      it.tableModel.addRow("1", "2", "3");
+    }
+
+    this.stackTracePanel.also {
+      it.tableModel.addRow("thread.run()");
+    }
   }
 }
